@@ -1,0 +1,29 @@
+.carousel {
+  height: 100%;
+  width: 100%;
+  background: red;
+  position: absolute;
+  border: 2px solid black;
+}
+.carousel-container {
+  width: 45rem;
+  margin: auto;
+  background-color: rebeccapurple;
+  overflow: hidden;
+}
+.ca-container {
+  display: flex;
+  position: relative;
+  width: 15rem;
+  height: 15rem;
+}
+.one {
+  background: green;
+}
+
+.two {
+  background: pink;
+}
+.three {
+  background: yellow;
+}
