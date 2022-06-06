@@ -1,16 +1,20 @@
 class Carousel {
   dom = {
     carouselDimension: { x: 0, y: 0 },
-    containers: document.querySelector(".ca-container"),
-    container: document.querySelectorAll(".carousel"),
     prevButton: null,
     nextButton: null,
     arraylength: null,
     count: 0,
     transitions: null,
+    demo: null,
+    demo2: null,
   };
 
-  constructor(dom) {
+  constructor(dom, container, containers) {
+    this.dom.demo = container;
+    this.dom.demo2 = containers;
+
+    // this.dom.containers = containers;
     this.dom.prevButton = Array.from(dom.children).find(
       (item) => item.classList.contains("prev") && item
     );
@@ -18,28 +22,28 @@ class Carousel {
       (item) => item.classList.contains("next") && item
     );
     this.dom.carouselDimension = {
-      x: this.dom.containers.clientWidth,
-      y: this.dom.containers.clientHeight,
+      x: this.dom.demo2.clientWidth,
+      y: this.dom.demo2.clientHeight,
     };
-    this.dom.arraylength = this.dom.container.length;
+    this.dom.arraylength = this.dom.demo.length;
     this.initEvents();
     this.initStyles();
   }
 
   //method to position the dom elements
   initStyles() {
-    this.dom.container.forEach((item, indx) => {
+    this.dom.demo.forEach((item, indx) => {
       item.style.right = this.dom.carouselDimension.x * indx + "px";
     });
   }
 
   //method to transition the slider
   initTransitions() {
-    const txts = (this.dom.containers.style.transition =
+    const txts = (this.dom.demo2.style.transition =
       "transform 0.4s ease-in-out");
   }
   getCurrent() {
-    console.log(this.dom.container[this.dom.count]);
+    console.log(this.dom.demo[this.dom.count]);
   }
 
   // method to call all the click events
@@ -49,7 +53,7 @@ class Carousel {
       if (this.dom.count < 0) {
         this.dom.count++;
       }
-      const transformDivPosition = (this.dom.containers.style.transform =
+      const transformDivPosition = (this.dom.demo2.style.transform =
         "translateX(" + this.dom.carouselDimension.x * this.dom.count + "px)");
       this.initTransitions();
     });
@@ -58,12 +62,18 @@ class Carousel {
       if (this.dom.count > this.dom.arraylength - 1) {
         this.dom.count--;
       }
-      const transformDivPosition = (this.dom.containers.style.transform =
+      const transformDivPosition = (this.dom.demo2.style.transform =
         "translateX(" + this.dom.carouselDimension.x * this.dom.count + "px)");
       this.initTransitions();
     });
   }
 }
-const test = document.querySelector(".carousel-container");
-const myCarousel = new Carousel(test);
+const carouselContainer = document.querySelector(".carousel-container");
+const carouselInnerContainer = document.querySelector(".ca-container");
+const carouselImages = document.querySelectorAll(".carousel");
+const myCarousel = new Carousel(
+  carouselContainer,
+  carouselImages,
+  carouselInnerContainer
+);
 console.log(myCarousel);
